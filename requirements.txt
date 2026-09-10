@@ -1,0 +1,154 @@
+Option 1: Minimal (recommended — reflects reality)
+
+# No external dependencies.
+# File Integrity Monitor uses only the Python 3.8+ standard library.
+#
+# Modules used:
+#   argparse, hashlib, json, os, sys, datetime, pathlib, typing
+#
+# Just ensure Python >= 3.8:
+#   python --version
+
+
+Option 2: Broad — Runtime + Dev + Optional Extensions
+
+# ============================================================================
+# File Integrity Monitor — requirements.txt
+# ============================================================================
+# Python 3.8+ required.
+#
+# The CORE tool has ZERO external dependencies — it uses only the standard
+# library. Everything below is optional and grouped by purpose. Uncomment
+# only what you actually need.
+# ============================================================================
+
+
+# ----------------------------------------------------------------------------
+# CORE RUNTIME
+# ----------------------------------------------------------------------------
+# (none — pure standard library)
+
+
+# ----------------------------------------------------------------------------
+# DEVELOPMENT & LINTING
+# ----------------------------------------------------------------------------
+# black==24.4.2            # opinionated code formatter
+# ruff==0.5.0              # fast linter (replaces flake8, isort, pyupgrade)
+# mypy==1.10.0             # static type checking
+# pre-commit==3.7.1        # git hook framework
+
+
+# ----------------------------------------------------------------------------
+# TESTING
+# ----------------------------------------------------------------------------
+# pytest==8.2.2            # test runner
+# pytest-cov==5.0.0        # coverage reporting
+# pytest-benchmark==4.0.0  # performance benchmarks
+# hypothesis==6.100.0      # property-based testing
+
+
+# ----------------------------------------------------------------------------
+# OPTIONAL EXTENSIONS (see Roadmap in README)
+# ----------------------------------------------------------------------------
+
+# --- Watch mode (real-time file monitoring) ---
+# watchdog==4.0.1
+
+# --- Tamper-proof baselines (HMAC signing) ---
+# cryptography==42.0.8
+
+# --- Alerting (email/Slack/webhook notifications) ---
+# requests==2.32.3         # generic HTTP (webhooks)
+# slack-sdk==3.29.0        # Slack notifications
+# python-dotenv==1.0.1     # load alert config from .env
+
+# --- SQLite backend for millions of files ---
+# (built-in via the `sqlite3` stdlib module — no package needed)
+# SQLAlchemy==2.0.30       # only if you want an ORM
+
+# --- Parallel hashing (faster scans) ---
+# (built-in via `concurrent.futures` — no package needed)
+
+# --- Merkle tree verification ---
+# merkletools==1.0.3
+
+# --- Rich CLI output (progress bars, colors) ---
+# rich==13.7.1
+# tqdm==4.66.4
+
+# --- Packaging & distribution ---
+# build==1.2.1
+# twine==5.1.1
+# wheel==0.43.0
+
+
+# ----------------------------------------------------------------------------
+# NOTES
+# ----------------------------------------------------------------------------
+# • To install only the essentials for contributing:
+#       pip install black ruff mypy pytest pytest-cov pre-commit
+#
+# • To install a specific extension (e.g. watch mode):
+#       pip install watchdog
+#
+# • For reproducible dev environments, pin versions and use:
+#       pip install -r requirements.txt
+#
+# • Consider splitting into multiple files as the project grows:
+#       requirements.txt         # runtime
+#       requirements-dev.txt     # dev + test
+#       requirements-optional.txt# extensions
+
+
+
+Option 3: Split into multiple files (best practice for growth)
+
+# File Integrity Monitor — runtime dependencies
+#
+# The core tool uses ONLY the Python 3.8+ standard library.
+# No third-party packages required to run fim.py.
+#
+# Optional extensions are listed in requirements-optional.txt.
+
+
+requirements-dev.txt (contributors)
+
+
+-r requirements.txt
+
+# Formatting & linting
+black==24.4.2
+ruff==0.5.0
+mypy==1.10.0
+
+# Testing
+pytest==8.2.2
+pytest-cov==5.0.0
+hypothesis==6.100.0
+
+# Git hooks
+pre-commit==3.7.1
+
+
+
+requirements-optional.txt (roadmap extensions)
+
+-r requirements.txt
+
+# Watch mode
+watchdog==4.0.1
+
+# HMAC-signed baselines
+cryptography==42.0.8
+
+# Alerting
+requests==2.32.3
+slack-sdk==3.29.0
+python-dotenv==1.0.1
+
+# Merkle tree verification
+merkletools==1.0.3
+
+# Nicer CLI output
+rich==13.7.1
+tqdm==4.66.4
