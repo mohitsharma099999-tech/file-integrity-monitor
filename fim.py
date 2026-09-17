@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""
-File Integrity Monitor (FIM)
-Hashes files, stores baseline checksums, and detects changes.
-"""
+
 
 import argparse
 import hashlib
